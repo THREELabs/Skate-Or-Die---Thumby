@@ -70,7 +70,10 @@ PlayerRunFrame1 = bytearray([0xFF, 0xFF, 0xFF, 0xFD, 0xF9, 0xBB, 0xBB, 0xD3, 0xE
 PlayerRunFrame2 = bytearray([0xFF, 0xFF, 0xF7, 0xFB, 0xFB, 0xFB, 0x3B, 0x93, 0xE3, 0x71, 0x03, 0xE7, 0xC3, 0xAB, 0xE7, 0xFF]) 
 CactusSpr1 = bytearray([0x00 ^ 0xFF, 0xFC ^ 0xFF, 0x86 ^ 0xFF, 0x92 ^ 0xFF, 0xC2 ^ 0xFF, 0xFC ^ 0xFF, 0x00 ^ 0xFF, 0x00 ^ 0xFF])
 CactusSpr2 = bytearray([0x00 ^ 0xFF, 0x1E ^ 0xFF, 0x10 ^ 0xFF, 0xFE ^ 0xFF, 0xE4 ^ 0xFF, 0x20 ^ 0xFF, 0x78 ^ 0xFF, 0x00 ^ 0xFF])
-CloudSpr = bytearray([0x9F, 0x4F, 0x63, 0x59, 0xBD, 0x73, 0x73, 0x65, 0x5C, 0x7E, 0x7E, 0x51, 0x57, 0x4F, 0x1F, 0xBF])
+CloudSpr = bytearray([255,255,255,127,127,191,223,223,231,247,243,251,253,254,254,254,254,254,254,252,253,251,231,239,207,207,159,127,127,255,255,255,
+           193,188,62,126,255,255,255,255,127,191,127,255,255,255,255,255,255,255,255,255,255,255,127,127,127,191,191,191,159,222,224,255,
+           3,3,3,3,2,2,2,2,3,3,3,2,2,1,1,1,1,1,2,2,2,2,3,3,3,3,3,3,3,3,3,3])
+
 # BITMAP: width: 32, height: 32
 SplashSpr = bytearray([0,0,0,0,0,0,0,0,128,128,192,224,252,254,254,252,240,240,240,224,224,192,192,128,128,0,0,0,0,0,0,0,
            0,0,12,12,2,3,3,1,1,29,125,253,255,63,127,127,127,127,127,63,62,248,192,129,1,1,2,6,4,0,0,0,
@@ -219,7 +222,7 @@ while(GameRunning):
     # Draw game state
     thumby.display.fill(1)
     thumby.display.blit(CactusSpr, int(16 + CactusPos), 24, 8, 8, 1, 0, 0)
-    thumby.display.blit(CloudSpr, int(16 + CloudPos), 8, 16, 8, 1, 0, 0)
+    thumby.display.blit(CloudSpr, int(32 + CloudPos), 8, 32, 18, 1, 0, 0)
 
     if(t0 % 250000 < 125000 or YPos != 0.0):
         # Player is in first frame of run animation

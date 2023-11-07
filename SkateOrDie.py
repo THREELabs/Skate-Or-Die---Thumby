@@ -65,9 +65,16 @@ JumpSoundTimer = 0
 
 # Sprite data
 
-PlayerSpr = bytearray([0x04 ^ 0xFF, 0x08 ^ 0xFF, 0xC8 ^ 0xFF, 0xBC ^ 0xFF, 0x1C ^ 0xFF, 0x0E ^ 0xFF, 0x1A ^ 0xFF, 0x2C ^ 0xFF])
-PlayerRunFrame1 = bytearray([0xFF, 0xFF, 0xFF, 0xFD, 0xF9, 0xBB, 0xBB, 0xD3, 0xE1, 0xF1, 0xC1, 0xB3, 0x61, 0xD5, 0xF3, 0xFF])
-PlayerRunFrame2 = bytearray([0xFF, 0xFF, 0xF7, 0xFB, 0xFB, 0xFB, 0x3B, 0x93, 0xE3, 0x71, 0x03, 0xE7, 0xC3, 0xAB, 0xE7, 0xFF]) 
+#PlayerSpr = bytearray([0x04 ^ 0xFF, 0x08 ^ 0xFF, 0xC8 ^ 0xFF, 0xBC ^ 0xFF, 0x1C ^ 0xFF, 0x0E ^ 0xFF, 0x1A ^ 0xFF, 0x2C ^ 0xFF])
+# BITMAP: width: 8, height: 8
+PlayerSpr = bytearray([253,189,13,176,176,13,189,253])
+
+# BITMAP: width: 16, height: 16
+PlayerRunFrame1 = bytearray([255,255,255,255,127,255,225,13,237,97,191,223,255,255,255,255,
+            255,255,223,191,30,174,182,184,182,175,31,191,223,255,255,255])
+# BITMAP: width: 16, height: 16
+PlayerRunFrame2 = bytearray([255,255,255,255,127,255,225,13,237,97,191,223,255,255,255,255,
+            255,255,223,191,30,174,182,184,182,175,31,191,223,255,255,255])
 CactusSpr1 = bytearray([0x00 ^ 0xFF, 0xFC ^ 0xFF, 0x86 ^ 0xFF, 0x92 ^ 0xFF, 0xC2 ^ 0xFF, 0xFC ^ 0xFF, 0x00 ^ 0xFF, 0x00 ^ 0xFF])
 CactusSpr2 = bytearray([0x00 ^ 0xFF, 0x1E ^ 0xFF, 0x10 ^ 0xFF, 0xFE ^ 0xFF, 0xE4 ^ 0xFF, 0x20 ^ 0xFF, 0x78 ^ 0xFF, 0x00 ^ 0xFF])
 
@@ -167,7 +174,7 @@ while(GameRunning):
         GameRunning = False
         thumby.display.fill(1)
         thumby.audio.stop()
-        thumby.display.drawText("Oh no!", 18, 1, 0)
+        #thumby.display.drawText("Oh no!", 18, 1, 0)
         thumby.display.drawText(str(int(Distance))+"m", 26, 9, 0)
         high = -1
         if(thumby.saveData.hasItem("highscore")):
@@ -228,14 +235,14 @@ while(GameRunning):
 
     if(t0 % 250000 < 125000 or YPos != 0.0):
         # Player is in first frame of run animation
-        thumby.display.blit(PlayerRunFrame1, 8, int(23 + YPos), 16, 8, 1, 0, 0)
+        thumby.display.blit(PlayerRunFrame1, 8, int(15 + YPos), 16, 16, 1, 0, 0)
     else:
         # Player is in second frame of run animation
-        thumby.display.blit(PlayerRunFrame2, 8, int(24 + YPos), 16, 8, 1, 0, 0)
+        thumby.display.blit(PlayerRunFrame2, 8, int(15 + YPos), 16, 16, 1, 0, 0)
 
     thumby.display.drawFilledRectangle(0, 31, thumby.display.width, 9, 0) # Ground
-    thumby.display.drawText(str(int(Points)), 0, 0, 0) # Current points
-    thumby.display.drawText("pts", len(str(int(Points))) * 8, 0, 0)
+    #Hide POints thumby.display.drawText(str(int(Points)), 0, 0, 0) # Current points
+    #Disable Points thumby.display.drawText("pts", len(str(int(Points))) * 8, 0, 0)
     thumby.display.drawText(str(int(Distance)), 0, 32, 1) # Current distance
     thumby.display.drawText("m", len(str(int(Distance))) * 8, 32, 1)
     thumby.display.update()

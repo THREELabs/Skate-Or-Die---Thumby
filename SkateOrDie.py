@@ -1,3 +1,8 @@
+#Music Library: https://github.com/transistortester/thumby-polysynth
+#from sys import path as syspath
+#syspath.append("/Games/SkateOrDie") #fix imports
+
+
 '''
     Created by:
     THREELabs
@@ -25,11 +30,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-#Music Library: https://github.com/transistortester/thumby-polysynth
 
 
-import sys
-#sys.path.insert(0, '/Games/SkateOrDie')
+
 import ssd1306
 import machine
 import time
@@ -40,8 +43,12 @@ import utime
 import thumby
 import os
 #import polysynth
+#import midi
 
-machine.freq(125000000)
+
+#polysynth.configure([polysynth.SQUARE, polysynth.NOISE]) #channel 0 is square, channel 1 is static, 2-6 is square
+
+machine.freq(125000000) #ensure this is running at full speed
 
 # This line helps make sure we don't run out of memory
 gc.enable() 
@@ -65,16 +72,24 @@ JumpSoundTimer = 0
 
 # Sprite data
 
-#PlayerSpr = bytearray([0x04 ^ 0xFF, 0x08 ^ 0xFF, 0xC8 ^ 0xFF, 0xBC ^ 0xFF, 0x1C ^ 0xFF, 0x0E ^ 0xFF, 0x1A ^ 0xFF, 0x2C ^ 0xFF])
-# BITMAP: width: 8, height: 8
-PlayerSpr = bytearray([253,189,13,176,176,13,189,253])
+
+# BITMAP for Main Character width: 16, height: 16. Not within code just used for reference.
+bitmap4 = bytearray([255,255,255,255,223,223,216,216,0,218,216,223,223,255,255,255,
+           255,255,255,239,223,159,15,183,184,183,175,159,31,191,223,239])
+
 
 # BITMAP: width: 16, height: 16
-PlayerRunFrame1 = bytearray([255,255,255,255,127,255,225,13,237,97,191,223,255,255,255,255,
-            255,255,223,191,30,174,182,184,182,175,31,191,223,255,255,255])
+PlayerRunFrame1 = bytearray([255,255,255,255,127,191,216,216,0,218,216,239,247,255,255,255,
+           255,255,255,239,223,159,15,183,184,135,159,159,63,191,223,239])
 # BITMAP: width: 16, height: 16
-PlayerRunFrame2 = bytearray([255,255,255,255,127,255,225,13,237,97,191,223,255,255,255,255,
-            255,255,223,191,30,174,182,184,182,175,31,191,223,255,255,255])
+
+PlayerRunFrame2 = bytearray([255,255,255,255,247,239,216,216,0,218,216,191,127,255,255,255,
+           255,255,255,239,223,159,15,183,184,135,159,159,63,191,223,239])
+           
+ # BITMAP: width: 16, height: 16
+PlayerRunFrame3 = bytearray([255,255,255,255,223,223,216,216,0,218,216,223,223,255,255,255,
+           255,255,255,239,223,159,15,183,184,135,159,159,63,191,223,239])          
+
 CactusSpr1 = bytearray([0x00 ^ 0xFF, 0xFC ^ 0xFF, 0x86 ^ 0xFF, 0x92 ^ 0xFF, 0xC2 ^ 0xFF, 0xFC ^ 0xFF, 0x00 ^ 0xFF, 0x00 ^ 0xFF])
 CactusSpr2 = bytearray([0x00 ^ 0xFF, 0x1E ^ 0xFF, 0x10 ^ 0xFF, 0xFE ^ 0xFF, 0xE4 ^ 0xFF, 0x20 ^ 0xFF, 0x78 ^ 0xFF, 0x00 ^ 0xFF])
 

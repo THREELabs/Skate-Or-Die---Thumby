@@ -1,18 +1,9 @@
-#Music Library: https://github.com/transistortester/thumby-polysynth
-#from sys import path as syspath
-#syspath.append("/Games/SkateOrDie") #fix imports
-
-
 '''
-    Created by:
-    THREELabs
+    Developer:
+    THREELabs / Kevin Webber
     
     Project Details:
-    Skateboarding
-    
-    Specs:
-    Forked from "SauRun" developed by Mason W.
-    
+    Skateboarding game derived from the SauRun game created by Mason W.
 '''
 
 '''
@@ -32,7 +23,7 @@
 
 
 
-
+# Configuration/Boilerplate
 import ssd1306
 import machine
 import time
@@ -42,13 +33,9 @@ import gc
 import utime
 import thumby
 import os
-#import polysynth
-#import midi
 
-
-#polysynth.configure([polysynth.SQUARE, polysynth.NOISE]) #channel 0 is square, channel 1 is static, 2-6 is square
-
-machine.freq(125000000) #ensure this is running at full speed
+# Overclock
+machine.freq(220000000)
 
 # This line helps make sure we don't run out of memory
 gc.enable() 
@@ -56,7 +43,6 @@ gc.enable()
 from framebuf import FrameBuffer, MONO_VLSB # Graphics stuff
 
 # Sensitive game parameters
-
 XVel = 0.05
 YVel = 0
 Distance = 0
@@ -74,23 +60,29 @@ JumpSoundTimer = 0
 
 
 # BITMAP for Main Character width: 16, height: 16. Not within code just used for reference.
-bitmap4 = bytearray([255,255,255,255,223,223,216,216,0,218,216,223,223,255,255,255,
-           255,255,255,239,223,159,15,183,184,183,175,159,31,191,223,239])
+
+bitmap2 = bytearray([255,255,255,223,143,159,153,16,0,17,159,159,143,223,255,255,
+           255,255,207,143,31,7,131,144,152,144,3,7,159,143,207,255])
 
 
 # BITMAP: width: 16, height: 16
-PlayerRunFrame1 = bytearray([255,255,255,255,127,191,216,216,0,218,216,239,247,255,255,255,
-           255,255,255,239,223,159,15,183,184,135,159,159,63,191,223,239])
-# BITMAP: width: 16, height: 16
+PlayerRunFrame1 = bytearray([255,255,255,223,143,159,153,16,0,17,159,159,143,223,255,255,
+           255,255,207,143,31,7,131,144,152,144,3,7,159,143,207,255])
 
-PlayerRunFrame2 = bytearray([255,255,255,255,247,239,216,216,0,218,216,191,127,255,255,255,
-           255,255,255,239,223,159,15,183,184,135,159,159,63,191,223,239])
+
+# BITMAP: width: 16, height: 16
+PlayerRunFrame2 = bytearray([255,255,255,255,63,31,153,16,0,17,159,31,63,127,255,255,
+           255,255,207,143,30,31,7,0,152,144,3,7,159,143,207,255]) 
            
- # BITMAP: width: 16, height: 16
-PlayerRunFrame3 = bytearray([255,255,255,255,223,223,216,216,0,218,216,223,223,255,255,255,
-           255,255,255,239,223,159,15,183,184,135,159,159,63,191,223,239])          
+# BITMAP: width: 16, height: 16
+PlayerRunFrame3 = bytearray([255,255,255,223,143,159,153,16,0,17,159,159,143,223,255,255,
+           255,255,207,137,17,19,147,144,152,144,3,7,159,143,207,255])      
 
-CactusSpr1 = bytearray([0x00 ^ 0xFF, 0xFC ^ 0xFF, 0x86 ^ 0xFF, 0x92 ^ 0xFF, 0xC2 ^ 0xFF, 0xFC ^ 0xFF, 0x00 ^ 0xFF, 0x00 ^ 0xFF])
+# BITMAP: width: 32, height: 32
+CactusSpr1 = bytearray([255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
+           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
+           255,127,63,159,207,231,115,51,179,195,227,51,143,231,243,249,252,126,126,190,158,206,238,246,242,2,56,159,223,207,79,31,
+           248,250,251,251,3,248,254,255,255,1,252,252,253,253,253,253,0,254,248,255,255,223,7,211,184,28,207,239,243,248,254,255])
 CactusSpr2 = bytearray([0x00 ^ 0xFF, 0x1E ^ 0xFF, 0x10 ^ 0xFF, 0xFE ^ 0xFF, 0xE4 ^ 0xFF, 0x20 ^ 0xFF, 0x78 ^ 0xFF, 0x00 ^ 0xFF])
 
 # BITMAP: width: 16, height: 12
@@ -119,6 +111,8 @@ thumby.display.drawSprite(SplashObj)
 thumby.display.drawText("Skate", 1, 1, 1)
 thumby.display.drawText("Or Die", 1, 14, 1)
 thumby.display.update()
+
+
 
 
 thumby.display.setFPS(60)
@@ -245,15 +239,18 @@ while(GameRunning):
 
     # Draw game state
     thumby.display.fill(1)
-    thumby.display.blit(CactusSpr, int(16 + CactusPos), 24, 8, 8, 1, 0, 0)
+    thumby.display.blit(CactusSpr, int(16 + CactusPos), 1, 32, 32, 1, 0, 0)
     thumby.display.blit(CloudSpr, int(32 + CloudPos), 8, 16, 12, 1, 0, 0)
 
     if(t0 % 250000 < 125000 or YPos != 0.0):
         # Player is in first frame of run animation
         thumby.display.blit(PlayerRunFrame1, 8, int(15 + YPos), 16, 16, 1, 0, 0)
+        
     else:
         # Player is in second frame of run animation
-        thumby.display.blit(PlayerRunFrame2, 8, int(15 + YPos), 16, 16, 1, 0, 0)
+        thumby.display.blit(PlayerRunFrame3, 8, int(15 + YPos), 16, 16, 1, 0, 0)
+        
+
 
     thumby.display.drawFilledRectangle(0, 31, thumby.display.width, 9, 0) # Ground
     #Hide POints thumby.display.drawText(str(int(Points)), 0, 0, 0) # Current points

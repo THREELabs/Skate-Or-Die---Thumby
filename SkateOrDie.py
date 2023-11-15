@@ -53,41 +53,37 @@ Points = 0
 GameRunning = True
 CactusPos = random.randint(72, 300)
 CloudPos = random.randint(60, 200)
+BirdPos = random.randint(60, 200)
 JumpSoundTimer = 0
 
 
-# Sprite data
+#Sprite Details
+# BITMAP: width: 10, height: 16
+PlayerRunFrame1 = bytearray([255,191,191,161,8,97,251,251,255,255,
+           223,191,15,183,184,183,174,29,191,223])
 
 
-# BITMAP for Main Character width: 16, height: 16. Not within code just used for reference.
+           
+# BITMAP: width: 8, height: 16
+# BITMAP: width: 10, height: 16
+PlayerRunFrame3 = bytearray([255,255,255,225,8,97,251,251,255,255,
+           223,187,57,190,160,23,174,29,191,223])   
 
-bitmap2 = bytearray([255,255,255,223,143,159,153,16,0,17,159,159,143,223,255,255,
-           255,255,207,143,31,7,131,144,152,144,3,7,159,143,207,255])
+# BITMAP: width: 8, height: 8
+Obj1 = bytearray([255,3,235,235,235,235,3,255])
 
+
+# BITMAP: width: 8, height: 8
+CactusSpr2 = bytearray([255,227,8,234,234,8,227,255])
 
 # BITMAP: width: 16, height: 16
-PlayerRunFrame1 = bytearray([255,255,255,223,143,159,153,16,0,17,159,159,143,223,255,255,
-           255,255,207,143,31,7,131,144,152,144,3,7,159,143,207,255])
-
-
-# BITMAP: width: 16, height: 16
-PlayerRunFrame2 = bytearray([255,255,255,255,63,31,153,16,0,17,159,31,63,127,255,255,
-           255,255,207,143,30,31,7,0,152,144,3,7,159,143,207,255]) 
+CloudSpr = bytearray([127,31,207,239,199,243,251,251,243,199,31,223,223,159,63,255,
+            248,251,243,247,247,247,247,247,247,247,247,247,247,243,250,248])
            
 # BITMAP: width: 16, height: 16
-PlayerRunFrame3 = bytearray([255,255,255,223,143,159,153,16,0,17,159,159,143,223,255,255,
-           255,255,207,137,17,19,147,144,152,144,3,7,159,143,207,255])      
+BirdSpr = bytearray([255,255,255,255,127,191,191,127,255,127,191,191,127,255,255,255,
+           255,255,253,254,255,255,255,255,254,255,255,255,255,254,253,255])
 
-# BITMAP: width: 32, height: 32
-CactusSpr1 = bytearray([255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
-           255,127,63,159,207,231,115,51,179,195,227,51,143,231,243,249,252,126,126,190,158,206,238,246,242,2,56,159,223,207,79,31,
-           248,250,251,251,3,248,254,255,255,1,252,252,253,253,253,253,0,254,248,255,255,223,7,211,184,28,207,239,243,248,254,255])
-CactusSpr2 = bytearray([0x00 ^ 0xFF, 0x1E ^ 0xFF, 0x10 ^ 0xFF, 0xFE ^ 0xFF, 0xE4 ^ 0xFF, 0x20 ^ 0xFF, 0x78 ^ 0xFF, 0x00 ^ 0xFF])
-
-# BITMAP: width: 16, height: 12
-CloudSpr = bytearray([31,207,231,247,247,231,243,249,253,249,195,239,239,239,207,31,
-           14,12,13,13,13,13,13,13,13,13,13,13,13,13,12,14])
 
 
 # BITMAP: width: 32, height: 32
@@ -99,7 +95,7 @@ SplashSpr = bytearray([0,0,0,0,0,0,0,0,128,128,192,224,252,254,254,252,240,240,2
 # Create Sprite objects using bitmaps
 SplashObj = thumby.Sprite(32, 32, SplashSpr,40,1)
 
-CactusSpr = CactusSpr1
+ObjSpr = Obj1
 
 thumby.display.fill(0)
 
@@ -108,8 +104,8 @@ thumby.display.fill(0)
 
 # Draw sprites and update display
 thumby.display.drawSprite(SplashObj)
-thumby.display.drawText("Skate", 1, 1, 1)
-thumby.display.drawText("Or Die", 1, 14, 1)
+thumby.display.drawText("Stick", 1, 1, 1)
+thumby.display.drawText("Border", 1, 14, 1)
 thumby.display.update()
 
 
@@ -117,7 +113,7 @@ thumby.display.update()
 
 thumby.display.setFPS(60)
 
-thumby.saveData.setName("SaurRun")
+thumby.saveData.setName("Sk8OrDie")
 
 while(thumby.buttonA.pressed() == True or thumby.buttonB.pressed() == True):
     if(time.ticks_ms() % 1000 < 500):
@@ -156,7 +152,7 @@ while(GameRunning):
     if((thumby.buttonA.pressed() == True or thumby.buttonB.pressed() == True) and YPos == 0.0):
         # Jump!
         JumpSoundTimer = 200
-        YVel = -2.5
+        YVel = -2.0
 
     # Handle "dynamics"
     YPos += YVel
@@ -170,9 +166,9 @@ while(GameRunning):
         thumby.audio.stop()
 
     # Accelerate the player just a little bit
-    XVel += 0.000025
+    XVel += 0.000050
 
-    # Make sure we haven't fallen below the groundW
+    # Make sure we haven't fallen below the ground
     if(YPos > 0):
         YPos = 0.0
         YVel = 0.0
@@ -212,6 +208,7 @@ while(GameRunning):
                 GameRunning = True
                 CactusPos = random.randint(72, 300)
                 CloudPos = random.randint(60, 200)
+                BirdPos = random.randint(60, 200)
 
             elif(thumby.buttonA.pressed() == True):
                 # Quit
@@ -224,33 +221,39 @@ while(GameRunning):
         thumby.audio.play(440, 300)
         CactusPos = random.randint(72, 500)
         if(random.randint(0, 1) == 0):
-            CactusSpr = CactusSpr1
+            ObjSpr = Obj1
         else:
-            CactusSpr = CactusSpr2
+            ObjSpr = CactusSpr2
+
 
     # Is the cloud out of view?
     if(CloudPos < -32):
         # "spawn" another one
         CloudPos = random.randint(40, 200)
+        
+    # Is the bird out of view?
+    if(BirdPos < -32):
+        # "spawn" another one
+        BirdPos = random.randint(40, 200)
 
     # More dynaaaaaaaaaaaamics
     CactusPos -= XVel * 16
     CloudPos -= XVel * 2
+    BirdPos -= XVel * 2
 
-    # Draw game state
+    # Draw game state 
     thumby.display.fill(1)
-    thumby.display.blit(CactusSpr, int(16 + CactusPos), 1, 32, 32, 1, 0, 0)
-    thumby.display.blit(CloudSpr, int(32 + CloudPos), 8, 16, 12, 1, 0, 0)
+    thumby.display.blit(ObjSpr, int(16 + CactusPos), 23, 8, 8, 1, 0, 0) # Example: thumby.display.blit(bitmapData, x, y, width, height, key, mirrorX, mirrorY)
+    thumby.display.blit(CloudSpr, int(32 + CloudPos), 8, 16, 16, 1, 0, 0)
+    thumby.display.blit(BirdSpr, int(32 + BirdPos), 8, 16, 16, 1, 0, 0)
 
     if(t0 % 250000 < 125000 or YPos != 0.0):
         # Player is in first frame of run animation
-        thumby.display.blit(PlayerRunFrame1, 8, int(15 + YPos), 16, 16, 1, 0, 0)
+        thumby.display.blit(PlayerRunFrame1, 8, int(15 + YPos), 10, 16, 1, 0, 0)
         
     else:
         # Player is in second frame of run animation
-        thumby.display.blit(PlayerRunFrame3, 8, int(15 + YPos), 16, 16, 1, 0, 0)
-        
-
+        thumby.display.blit(PlayerRunFrame3, 8, int(15 + YPos), 10, 16, 1, 0, 0)
 
     thumby.display.drawFilledRectangle(0, 31, thumby.display.width, 9, 0) # Ground
     #Hide POints thumby.display.drawText(str(int(Points)), 0, 0, 0) # Current points

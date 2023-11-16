@@ -47,14 +47,39 @@ XVel = 0.05
 YVel = 0
 Distance = 0
 YPos = 0
-Gravity = 0.15
+Gravity = 0.08
 MaxFPS = 60
 Points = 0
 GameRunning = True
 CactusPos = random.randint(72, 300)
 CloudPos = random.randint(60, 200)
 BirdPos = random.randint(60, 200)
+SunPos = random.randint(60, 200)
 JumpSoundTimer = 0
+
+
+'''
+#BG For testing from game GuiguitteTribute
+
+# 72x40 for 1 frames
+bg = bytearray([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,192,32,240,144,112,112,224,192,0,0,0,0,0,0,0,0,0,0,64,128,192,224,224,240,252,252,252,252,252,248,240,240,224,129,128,0,0,0,0,0,0,0,8,0,4,0,2,0,0,0,0,32,0,128,128,128,192,192,192,128,0,0,0,0,0,0,0,0,0,0,0,0,1,3,7,5,6,6,3,1,0,0,0,0,0,0,128,0,0,0,0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,254,248,240,240,224,0,0,0,128,136,224,224,248,252,252,254,255,255,255,255,255,255,255,255,252,248,248,240,224,192,128,128,0,0,0,0,0,0,0,0,0,0,32,0,0,0,0,0,0,0,0,0,0,0,0,191,63,127,127,127,63,191,191,191,191,159,223,223,207,239,231,243,251,249,253,252,254,254,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,254,252,248,240,224,192,192,192,192,192,128,128,128,128,128,0,0,0,0,0,0,0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255])
+# 72x40 for 1 frames
+bg2 = bytearray([0,0,0,0,0,0,0,0,0,16,0,0,0,0,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,112,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,128,0,4,0,0,0,0,0,0,0,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,16,0,0,1,0,0,0,0,1,0,0,0,0,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,192,240,248,254,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,128,128,128,136,192,192,224,224,240,240,240,248,252,254,255,255,255,255,255,254,254,254,254,254,254,254,254,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,252,254,254,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255])
+
+
+# Background sprites & x positions
+bgSpr = thumby.Sprite(72, 40, bg)
+bg2Spr = thumby.Sprite(72, 40, bg2)
+bgSpr.x = 0
+bg2Spr.x = 72
+'''
+
+
+
+
+
+
+
 
 
 #Sprite Details
@@ -79,10 +104,15 @@ CactusSpr2 = bytearray([255,227,8,234,234,8,227,255])
 # BITMAP: width: 16, height: 16
 CloudSpr = bytearray([127,31,207,239,199,243,251,251,243,199,31,223,223,159,63,255,
             248,251,243,247,247,247,247,247,247,247,247,247,247,243,250,248])
-           
+            
 # BITMAP: width: 16, height: 16
-BirdSpr = bytearray([255,255,255,255,127,191,191,127,255,127,191,191,127,255,255,255,
-           255,255,253,254,255,255,255,255,254,255,255,255,255,254,253,255])
+
+SunSpr = bytearray([255,31,239,247,251,253,253,253,253,253,253,251,247,239,31,255,
+           255,248,247,239,223,191,191,191,191,191,191,223,239,247,248,255])
+
+# BITMAP: width: 16, height: 16
+BirdSpr = bytearray([255,255,239,247,251,251,251,247,239,247,251,251,251,247,255,255,
+           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255])
 
 
 
@@ -104,8 +134,8 @@ thumby.display.fill(0)
 
 # Draw sprites and update display
 thumby.display.drawSprite(SplashObj)
-thumby.display.drawText("Stick", 1, 1, 1)
-thumby.display.drawText("Border", 1, 14, 1)
+thumby.display.drawText("Skate", 1, 1, 1)
+thumby.display.drawText("Or Die", 1, 14, 1)
 thumby.display.update()
 
 
@@ -151,8 +181,8 @@ while(GameRunning):
         JumpSoundTimer = 0
     if((thumby.buttonA.pressed() == True or thumby.buttonB.pressed() == True) and YPos == 0.0):
         # Jump!
-        JumpSoundTimer = 200
-        YVel = -2.0
+        JumpSoundTimer = 350
+        YVel = -1.5 # How High you will jump
 
     # Handle "dynamics"
     YPos += YVel
@@ -166,7 +196,7 @@ while(GameRunning):
         thumby.audio.stop()
 
     # Accelerate the player just a little bit
-    XVel += 0.000050
+    XVel += 0.0000150
 
     # Make sure we haven't fallen below the ground
     if(YPos > 0):
@@ -209,6 +239,7 @@ while(GameRunning):
                 CactusPos = random.randint(72, 300)
                 CloudPos = random.randint(60, 200)
                 BirdPos = random.randint(60, 200)
+                SunPos = random.randint(60, 200)
 
             elif(thumby.buttonA.pressed() == True):
                 # Quit
@@ -224,6 +255,11 @@ while(GameRunning):
             ObjSpr = Obj1
         else:
             ObjSpr = CactusSpr2
+            
+    # Is the Sun out of view?
+    if(SunPos < -10):
+        # "spawn" another one
+        SunPos = random.randint(40, 200)
 
 
     # Is the cloud out of view?
@@ -236,17 +272,21 @@ while(GameRunning):
         # "spawn" another one
         BirdPos = random.randint(40, 200)
 
-    # More dynaaaaaaaaaaaamics
+    # More dynamics
     CactusPos -= XVel * 16
-    CloudPos -= XVel * 2
+    CloudPos -= XVel * 1
     BirdPos -= XVel * 2
+    SunPos -= XVel * 1
 
     # Draw game state 
     thumby.display.fill(1)
     thumby.display.blit(ObjSpr, int(16 + CactusPos), 23, 8, 8, 1, 0, 0) # Example: thumby.display.blit(bitmapData, x, y, width, height, key, mirrorX, mirrorY)
-    thumby.display.blit(CloudSpr, int(32 + CloudPos), 8, 16, 16, 1, 0, 0)
-    thumby.display.blit(BirdSpr, int(32 + BirdPos), 8, 16, 16, 1, 0, 0)
-
+    thumby.display.blit(CloudSpr, int(32 + CloudPos), 12, 16, 16, 1, 0, 0)
+    thumby.display.blit(BirdSpr, int(10 + BirdPos), 8, 16, 16, 1, 0, 0)
+    thumby.display.blit(CloudSpr, int(2 + CloudPos), 2, 16, 16, 1, 0, 0)
+    thumby.display.blit(BirdSpr, int(32 + BirdPos), 2, 16, 16, 1, 0, 0)
+    thumby.display.blit(SunSpr, int(32 + SunPos), 2, 16, 16, 1, 0, 0)
+    
     if(t0 % 250000 < 125000 or YPos != 0.0):
         # Player is in first frame of run animation
         thumby.display.blit(PlayerRunFrame1, 8, int(15 + YPos), 10, 16, 1, 0, 0)

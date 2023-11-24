@@ -300,6 +300,8 @@ while(GameRunning):
 
     # Draw game state 
     thumby.display.fill(1)
+    thumby.display.drawSprite(bgSpr)
+    thumby.display.drawSprite(bg2Spr)
     thumby.display.blit(ObjSpr, int(16 + CactusPos), 23, 8, 8, 1, 0, 0) # Example: thumby.display.blit(bitmapData, x, y, width, height, key, mirrorX, mirrorY)
     thumby.display.blit(CloudSpr, int(32 + CloudPos), 12, 16, 16, 1, 0, 0)
     thumby.display.blit(BirdSpr, int(10 + BirdPos), 8, 16, 16, 1, 0, 0)
@@ -315,8 +317,7 @@ while(GameRunning):
         # Player is in second frame of run animation
         thumby.display.blit(PlayerRunFrame3, 8, int(15 + YPos), 10, 16, 1, 0, 0)
         
-    thumby.display.drawSprite(bgSpr)
-    thumby.display.drawSprite(bg2Spr)
+
 
     thumby.display.drawFilledRectangle(0, 31, thumby.display.width, 9, 0) # Ground
     #Hide POints thumby.display.drawText(str(int(Points)), 0, 0, 0) # Current points

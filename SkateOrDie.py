@@ -97,14 +97,6 @@ bg3 = bytearray([255,255,255,31,175,167,171,171,171,171,171,171,171,43,203,235,2
 
 
 
-
-
-
-
-
-
-
-
 # Background sprites & initial x positions
 bgSpr = thumby.Sprite(72, 30, bg)
 bg2Spr = thumby.Sprite(72, 30, bg2)
@@ -114,8 +106,6 @@ bg2Spr.x = 72
 bg3Spr.x = 144
 
 
-
-
 scrollCtr = 0
 
 
@@ -123,7 +113,6 @@ scrollCtr = 0
 # BITMAP: width: 10, height: 16
 PlayerRunFrame1 = bytearray([255,191,191,161,8,97,251,251,255,255,
            223,191,15,183,184,183,174,29,191,223])
-
 
            
 # BITMAP: width: 8, height: 16
@@ -168,7 +157,6 @@ thumby.display.fill(0)
 
 
 
-
 # Draw sprites and update display
 thumby.display.drawSprite(SplashObj)
 thumby.display.drawText("Skate", 1, 1, 1)
@@ -178,11 +166,23 @@ thumby.display.update()
 
 
 
-
 thumby.display.setFPS(60)
 
 thumby.saveData.setName("Sk8OrDie")
-
+#Intro Music
+thumby.audio.playBlocking(400, 125)
+thumby.audio.playBlocking(400, 125)
+thumby.audio.playBlocking(800, 125)
+thumby.audio.playBlocking(800, 125)
+thumby.audio.playBlocking(200, 125)
+thumby.audio.playBlocking(200, 125)
+thumby.audio.playBlocking(400, 125)
+thumby.audio.playBlocking(400, 125)
+thumby.audio.playBlocking(700, 125)
+thumby.audio.playBlocking(700, 125)
+thumby.audio.playBlocking(900, 125)
+thumby.audio.playBlocking(20, 125)
+thumby.audio.playBlocking(1568, 125)
 while(thumby.buttonA.pressed() == True or thumby.buttonB.pressed() == True):
     if(time.ticks_ms() % 1000 < 500):
         thumby.display.drawFilledRectangle(0, 32, 72, 8, 0)
@@ -218,13 +218,18 @@ while(GameRunning):
     if(scrollCtr % 8 == 0): # Move the background every 8 loops
         bgSpr.x -= 1
         bg2Spr.x -= 1
+        bg3Spr.x -= 1
 
 
     # Re-place the x coordinate of backgrounds when they're unseen
     if (bg2Spr.x == 0):
         bgSpr.x = 72
+        
     if (bg2Spr.x == -72):
         bg2Spr.x = 72
+        
+    if (bg3Spr.x == 0):
+        bgSpr.x = 72    
         
         
     t0 = utime.ticks_us() # Check the time
@@ -366,3 +371,4 @@ while(GameRunning):
     # Spin wheels until we've used up one frame's worth of time
     while(utime.ticks_us() - t0 < 1000000.0 / MaxFPS):
         pass
+

@@ -124,8 +124,8 @@ bg3Spr = thumby.Sprite(72, 30, bg3)
 bg4Spr = thumby.Sprite(72, 30, bg4)
 bgSpr.x = 0
 bg2Spr.x = 72
-bg3Spr.x = 144
-bg4Spr.x = 216
+bg3Spr.x = 72
+bg4Spr.x = 72
 
 
 scrollCtr = 0
@@ -282,23 +282,16 @@ while(GameRunning):
 
     # Re-place the x coordinate of backgrounds when they're unseen
     if (bg2Spr.x == 0):
-        bgSpr.x = 72
-        
-    if (bg2Spr.x == -72):
-        bg2Spr.x = 72
-        
-    if (bg3Spr.x == 0):
-        bgSpr.x = 72  
+        bg3Spr.x = 72
         
     if (bg3Spr.x == -72):
-        bg3Spr.x = 72       
-        
-        
-    if (bg4Spr.x == 0):
-        bgSpr.x = 72    
+        bg4Spr.x = 72
         
     if (bg4Spr.x == -72):
-        bg4Spr.x = 72 
+        bgSpr.x = 72  
+        
+
+
         
     t0 = utime.ticks_us() # Check the time
 
@@ -412,6 +405,7 @@ while(GameRunning):
     thumby.display.drawSprite(bgSpr)
     thumby.display.drawSprite(bg2Spr)
     thumby.display.drawSprite(bg3Spr)
+    thumby.display.drawSprite(bg4Spr)
     thumby.display.blit(ObjSpr, int(16 + CactusPos), 23, 8, 8, 1, 0, 0) # Example: thumby.display.blit(bitmapData, x, y, width, height, key, mirrorX, mirrorY)
 
     '''Disable Flying Objects for now''

@@ -137,6 +137,7 @@ bg4Spr.x = 216
 bg5Spr.x = 288
 
 
+
 scrollCtr = 0
 
 
@@ -290,12 +291,13 @@ while(GameRunning):
         bg4Spr.x -= 1
         bg5Spr.x -= 1
 
+
         # Re-place the x coordinate of backgrounds when they're unseen
         if (bg2Spr.x == 0):
             bgSpr.x = 72
         if (bg2Spr.x == -72):
             bg2Spr.x = 72 
-        
+       
     t0 = utime.ticks_us() # Check the time
 
 

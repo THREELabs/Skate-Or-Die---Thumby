@@ -65,7 +65,7 @@ YVel = 0
 Distance = 0
 YPos = 0
 Gravity = 0.08
-MaxFPS = 60
+MaxFPS = 33
 Points = 0
 GameRunning = True
 CactusPos = random.randint(72, 300)
@@ -235,7 +235,7 @@ def PlayMusic(utimeTicksUS):
 BGMOffset = utime.ticks_us()
 
 
-thumby.display.setFPS(60)
+thumby.display.setFPS(33)
 
 thumby.saveData.setName("Sk8OrDie")
 #Intro Music

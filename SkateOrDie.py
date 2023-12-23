@@ -263,6 +263,8 @@ while(thumby.buttonA.pressed() == True or thumby.buttonB.pressed() == True):
 
 while(GameRunning):
     
+    scrollCtr += 1
+    
     if(scrollCtr % 2 == 0):
         bgSpr.x -= 1
         bg2Spr.x -= 1
